@@ -5,10 +5,10 @@ require('@babel/register');
 
 module.exports = env => {
     return {
-        entry: ['./src/index.js', './src/style.css'],
+        entry: ['./src/js/index.js'],
         output: {
             path: path.resolve(__dirname, 'dist/'),
-            filename: 'bundle.js'
+            filename: '[name].js'
         },
         devtool: 'source-map',
         // ...
@@ -18,9 +18,19 @@ module.exports = env => {
                 exclude: /node_modules/,
                 use: ['babel-loader']
             }, {
-                test: /\.css$/,
+                test: /\.s[ac]ss$/,
                 exclude: /node_modules/,
-                use: ['style-loader', 'css-loader']
+                use: ['style-loader',
+                {
+                    loader: 'css-loader',
+                    options: { sourceMap: true }
+                },
+                {
+                    loader: 'sass-loader',
+                    options: {
+                        sassOptions: { outputStyle: 'expanded' }
+                    }
+                }]
             }]
         },
         // ...
