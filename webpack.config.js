@@ -42,7 +42,11 @@ module.exports = env => {
             }),
             new webpack.DefinePlugin({
                 'API_URL': JSON.stringify(env.API_URL)
-            })
+            }),
+            new webpack.ProvidePlugin({
+                $: 'jquery',
+                jQuery: 'jquery'
+            }),
         ]
     }
 };
